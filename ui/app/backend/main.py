@@ -95,7 +95,8 @@ def debug(body: DebugRequest) -> DebugResponse:
         raise HTTPException(status_code=400, detail="Paste SystemVerilog code or an error first.")
 
     try:
-        result = debug_systemverilog(text)
+        # UI renders structured alternatives separately — avoid duplicate markdown blocks.
+        result = debug_systemverilog(text, include_alternatives_markdown=False)
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
     except Exception as exc:  # noqa: BLE001

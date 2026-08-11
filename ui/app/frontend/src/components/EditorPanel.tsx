@@ -1,6 +1,9 @@
+import Editor from "@monaco-editor/react";
+
 type EditorPanelProps = {
   value: string;
   busy: boolean;
+  theme: "dark" | "light";
   onChange: (value: string) => void;
   onDebug: () => void;
   onClear: () => void;
@@ -9,26 +12,46 @@ type EditorPanelProps = {
 export function EditorPanel({
   value,
   busy,
+  theme,
   onChange,
   onDebug,
   onClear,
 }: EditorPanelProps) {
   return (
     <section className="editor-panel" aria-label="Debug input">
-      <label className="editor-label" htmlFor="debug-input">
-        Paste code, compiler error, or sim log
-      </label>
+      <div className="editor-tabbar">
+        <div className="editor-tab active">debug.sv</div>
+        <div className="editor-tabbar-meta">SystemVerilog</div>
+      </div>
       {busy ? <div className="analyzing-banner">Analyzing…</div> : null}
-      <textarea
-        id="debug-input"
-        className={`editor${busy ? " is-busy" : ""}`}
-        value={value}
-        onChange={(event) => onChange(event.target.value)}
-        placeholder="module … / error: … / # time 20: q=x"
-        spellCheck={false}
-        disabled={busy}
-      />
-      <div className="actions">
+      <div className={`monaco-wrap${busy ? " is-busy" : ""}`}>
+        <Editor
+          height="100%"
+          defaultLanguage="systemverilog"
+          language="systemverilog"
+          theme={theme === "dark" ? "vs-dark" : "light"}
+          value={value}
+          onChange={(next) => onChange(next ?? "")}
+          options={{
+            readOnly: busy,
+            fontFamily: "Consolas, 'Courier New', monospace",
+            fontSize: 14,
+            lineHeight: 22,
+            minimap: { enabled: false },
+            scrollBeyondLastLine: false,
+            wordWrap: "on",
+            automaticLayout: true,
+            tabSize: 2,
+            renderLineHighlight: "line",
+            padding: { top: 10, bottom: 10 },
+            scrollbar: {
+              verticalScrollbarSize: 10,
+              horizontalScrollbarSize: 10,
+            },
+          }}
+        />
+      </div>
+      <div className="editor-actions">
         <button
           type="button"
           className="btn btn-primary"

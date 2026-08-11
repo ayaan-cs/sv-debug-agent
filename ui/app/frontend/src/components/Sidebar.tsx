@@ -16,22 +16,21 @@ export function Sidebar({
   onLoadSample,
 }: SidebarProps) {
   return (
-    <aside className="sidebar" aria-label="Workspace controls">
-      <div className="sidebar-top">
-        <div className="sidebar-brand">SV Debug Agent</div>
+    <aside className="sidebar" aria-label="Explorer">
+      <div className="sidebar-header">
+        <span>EXPLORER</span>
         <button
           type="button"
           className="theme-toggle"
           onClick={onToggleTheme}
           aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
         >
-          {theme === "dark" ? "Light" : "Dark"}
+          {theme === "dark" ? "Light+" : "Dark+"}
         </button>
       </div>
 
-      <section className="sidebar-section">
-        <h2 className="sidebar-label">Try a sample</h2>
-        <p className="sidebar-copy">Load an example, then press Debug.</p>
+      <div className="sidebar-section">
+        <div className="sidebar-section-title">SAMPLES</div>
         <div className="sample-list">
           {samples.map((sample) => (
             <button
@@ -44,34 +43,27 @@ export function Sidebar({
             </button>
           ))}
         </div>
-      </section>
+      </div>
 
-      <section className="sidebar-section">
-        <h2 className="sidebar-label">Mode</h2>
+      <div className="sidebar-section">
+        <div className="sidebar-section-title">MODE</div>
         {status?.demo_mode ? (
           <p className="sidebar-copy">
-            Demo mode runs offline with built-in helpers. No API key required.
-            Set DEMO_MODE=false and GEMINI_API_KEY in .env for Gemini.
+            Demo mode · offline helpers (no API key)
           </p>
         ) : status?.has_api_key ? (
-          <p className="sidebar-copy">
-            Live Gemini mode is active using your API key.
-          </p>
+          <p className="sidebar-copy">Live Gemini mode</p>
         ) : (
-          <p className="sidebar-copy">
-            No API key found. Add GEMINI_API_KEY to .env, or set DEMO_MODE=true.
-          </p>
+          <p className="sidebar-copy">No API key · set DEMO_MODE=true</p>
         )}
-      </section>
+      </div>
 
-      <section className="sidebar-section">
-        <h2 className="sidebar-label">Tips</h2>
+      <div className="sidebar-section sidebar-tips">
+        <div className="sidebar-section-title">TIPS</div>
         <p className="sidebar-tip">Start from the first unknown X in a sim log.</p>
-        <p className="sidebar-tip">
-          Keep a few lines of context around compiler errors.
-        </p>
-        <p className="sidebar-tip">Source plus the error together works best.</p>
-      </section>
+        <p className="sidebar-tip">Keep context around compiler errors.</p>
+        <p className="sidebar-tip">Source + error together works best.</p>
+      </div>
     </aside>
   );
 }

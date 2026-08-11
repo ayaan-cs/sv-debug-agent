@@ -11,7 +11,11 @@ from .helpers import (
 from .suggestions import format_alternatives_markdown, suggest_alternatives
 
 
-def demo_debug_systemverilog(user_input: str) -> str:
+def demo_debug_systemverilog(
+    user_input: str,
+    *,
+    include_alternatives_markdown: bool = True,
+) -> str:
     """Local diagnosis using the same helper tools (no Gemini call)."""
     text = user_input.strip()
 
@@ -45,10 +49,11 @@ def demo_debug_systemverilog(user_input: str) -> str:
             "Try one of the sample inputs, or paste a real compile/sim log."
         )
 
-    alternatives = suggest_alternatives(text)
-    alt_md = format_alternatives_markdown(alternatives)
-    if alt_md:
-        sections.append(alt_md)
+    if include_alternatives_markdown:
+        alternatives = suggest_alternatives(text)
+        alt_md = format_alternatives_markdown(alternatives)
+        if alt_md:
+            sections.append(alt_md)
 
     sections.append("---")
     sections.append(

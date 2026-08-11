@@ -115,54 +115,61 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      <Sidebar
-        status={status}
-        samples={samples}
-        theme={theme}
-        onToggleTheme={() =>
-          setTheme((current) => (current === "dark" ? "light" : "dark"))
-        }
-        onLoadSample={handleLoadSample}
-      />
+      <header className="titlebar">
+        <div className="titlebar-brand">SV Debug Agent</div>
+        <div className="titlebar-center">debug.sv — SystemVerilog Debugging</div>
+        <div className="titlebar-mode">
+          {status?.demo_mode ? "Demo" : "Live"}
+        </div>
+      </header>
 
-      <main className="main">
-        <header className="hero">
-          <p className="brand">SV Debug Agent</p>
-          <h1>Debug SystemVerilog faster</h1>
-          <p className="lede">
-            Paste HDL, a compiler error, or a sim log. Get a concrete
-            explanation of what is wrong and how to fix it.
-          </p>
-          {status ? (
-            <div className={`mode-pill ${status.demo_mode ? "demo" : "live"}`}>
-              {status.demo_mode
-                ? "Demo mode · offline helpers"
-                : "Live mode · Gemini"}
-            </div>
+      <div className="workbench">
+        <div className="activity-bar" aria-hidden="true">
+          <span className="activity-dot active" />
+          <span className="activity-dot" />
+          <span className="activity-dot" />
+        </div>
+
+        <Sidebar
+          status={status}
+          samples={samples}
+          theme={theme}
+          onToggleTheme={() =>
+            setTheme((current) => (current === "dark" ? "light" : "dark"))
+          }
+          onLoadSample={handleLoadSample}
+        />
+
+        <div className="editor-column">
+          {bootError ? (
+            <p className="boot-error" role="alert">
+              {bootError}
+            </p>
           ) : null}
-        </header>
 
-        {bootError ? (
-          <p className="boot-error" role="alert">
-            {bootError}
-          </p>
-        ) : null}
+          <EditorPanel
+            value={input}
+            busy={busy}
+            theme={theme}
+            onChange={setInput}
+            onDebug={() => void handleDebug()}
+            onClear={handleClear}
+          />
 
-        <EditorPanel
-          value={input}
-          busy={busy}
-          onChange={setInput}
-          onDebug={() => void handleDebug()}
-          onClear={handleClear}
-        />
+          <ResultPanel
+            result={result}
+            error={error}
+            alternatives={alternatives}
+            onApplyAlternative={handleApplyAlternative}
+          />
+        </div>
+      </div>
 
-        <ResultPanel
-          result={result}
-          error={error}
-          alternatives={alternatives}
-          onApplyAlternative={handleApplyAlternative}
-        />
-      </main>
+      <footer className="statusbar">
+        <span>{status?.demo_mode ? "Demo mode" : "Gemini live"}</span>
+        <span>UTF-8</span>
+        <span>SystemVerilog</span>
+      </footer>
     </div>
   );
 }
