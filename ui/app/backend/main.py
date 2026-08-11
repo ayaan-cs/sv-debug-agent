@@ -19,11 +19,11 @@ for path in (REPO_ROOT, APP_DIR):
         sys.path.insert(0, str(path))
 
 from samples import SAMPLES  # noqa: E402
-from sv_agent import debug_systemverilog, demo_mode_enabled, has_api_key  # noqa: E402
+from sv_debug import debug_systemverilog, demo_mode_enabled, has_api_key  # noqa: E402
 
 app = FastAPI(
     title="SV Debug Agent API",
-    description="Local API for the SV Debug Agent UI. Debugging logic is in sv_agent.py.",
+    description="Local API for the SV Debug Agent UI. Debugging logic lives in sv_debug/.",
     version="0.1.0",
 )
 

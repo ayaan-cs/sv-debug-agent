@@ -5,6 +5,10 @@ import { ResultPanel } from "./components/ResultPanel";
 import { Sidebar } from "./components/Sidebar";
 import type { AppStatus, Sample } from "./types";
 
+type Theme = "dark" | "light";
+
+const THEME_KEY = "sv-debug-theme";
+
 const FALLBACK_SAMPLE = `module counter (
   input  logic clk,
   input  logic en,
@@ -16,7 +20,13 @@ const FALLBACK_SAMPLE = `module counter (
   end
 endmodule`;
 
+function readStoredTheme(): Theme {
+  const stored = localStorage.getItem(THEME_KEY);
+  return stored === "light" ? "light" : "dark";
+}
+
 export default function App() {
+  const [theme, setTheme] = useState<Theme>(() => readStoredTheme());
   const [status, setStatus] = useState<AppStatus | null>(null);
   const [samples, setSamples] = useState<Sample[]>([]);
   const [input, setInput] = useState(FALLBACK_SAMPLE);
@@ -24,6 +34,11 @@ export default function App() {
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [bootError, setBootError] = useState<string | null>(null);
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem(THEME_KEY, theme);
+  }, [theme]);
 
   useEffect(() => {
     let cancelled = false;
@@ -44,7 +59,7 @@ export default function App() {
         setBootError(
           err instanceof Error
             ? err.message
-            : "Could not reach the local API. Run start-api.ps1 first.",
+            : "Could not reach the local API. Run ui/app/start-api.ps1 first.",
         );
       }
     }
@@ -92,6 +107,10 @@ export default function App() {
       <Sidebar
         status={status}
         samples={samples}
+        theme={theme}
+        onToggleTheme={() =>
+          setTheme((current) => (current === "dark" ? "light" : "dark"))
+        }
         onLoadSample={handleLoadSample}
       />
 
@@ -104,9 +123,7 @@ export default function App() {
             explanation of what is wrong and how to fix it.
           </p>
           {status ? (
-            <div
-              className={`mode-pill ${status.demo_mode ? "demo" : "live"}`}
-            >
+            <div className={`mode-pill ${status.demo_mode ? "demo" : "live"}`}>
               {status.demo_mode
                 ? "Demo mode · offline helpers"
                 : "Live mode · Gemini"}

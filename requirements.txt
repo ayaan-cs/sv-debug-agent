@@ -4,3 +4,4 @@ fastapi
 uvicorn[standard]
 pywebview
 streamlit
+pytest

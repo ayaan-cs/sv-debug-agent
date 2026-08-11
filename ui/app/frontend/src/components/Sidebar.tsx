@@ -3,13 +3,31 @@ import type { AppStatus, Sample } from "../types";
 type SidebarProps = {
   status: AppStatus | null;
   samples: Sample[];
+  theme: "dark" | "light";
+  onToggleTheme: () => void;
   onLoadSample: (sample: Sample) => void;
 };
 
-export function Sidebar({ status, samples, onLoadSample }: SidebarProps) {
+export function Sidebar({
+  status,
+  samples,
+  theme,
+  onToggleTheme,
+  onLoadSample,
+}: SidebarProps) {
   return (
     <aside className="sidebar" aria-label="Workspace controls">
-      <div className="sidebar-brand">SV Debug Agent</div>
+      <div className="sidebar-top">
+        <div className="sidebar-brand">SV Debug Agent</div>
+        <button
+          type="button"
+          className="theme-toggle"
+          onClick={onToggleTheme}
+          aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+        >
+          {theme === "dark" ? "Light" : "Dark"}
+        </button>
+      </div>
 
       <section className="sidebar-section">
         <h2 className="sidebar-label">Try a sample</h2>
@@ -31,16 +49,10 @@ export function Sidebar({ status, samples, onLoadSample }: SidebarProps) {
       <section className="sidebar-section">
         <h2 className="sidebar-label">Mode</h2>
         {status?.demo_mode ? (
-          <>
-            <p className="sidebar-copy">
-              Demo mode is on. Diagnosis runs offline with built-in helpers — no
-              API key required.
-            </p>
-            <p className="sidebar-copy">
-              For Gemini later: set DEMO_MODE=false and add GEMINI_API_KEY in
-              your .env file.
-            </p>
-          </>
+          <p className="sidebar-copy">
+            Demo mode runs offline with built-in helpers. No API key required.
+            Set DEMO_MODE=false and GEMINI_API_KEY in .env for Gemini.
+          </p>
         ) : status?.has_api_key ? (
           <p className="sidebar-copy">
             Live Gemini mode is active using your API key.

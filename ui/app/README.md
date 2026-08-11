@@ -1,25 +1,26 @@
-# App UI (desktop + React)
+# App UI
 
-Current UI for SV Debug Agent.
+Recommended UI for SV Debug Agent.
 
-- `frontend/` — React + Vite shell (use with Claude Design)
-- `backend/` — thin FastAPI wrapper around root `sv_agent.py`
-- `desktop_app.py` — native desktop window (pywebview)
-- `CLAUDE_DESIGN_PROMPT.md` — prompt for design polish
+| Path | Purpose |
+|------|---------|
+| `frontend/` | React + Vite UI |
+| `backend/` | FastAPI wrapper around root `sv_agent.py` |
+| `desktop_app.py` | Native desktop window (pywebview) |
 
-## Desktop app
+## Run
 
-From this folder:
+Desktop:
 
 ```powershell
 .\start-desktop.ps1
 ```
 
-## Browser / design mode
+Browser:
 
 ```powershell
 .\start-api.ps1
 .\start-ui.ps1
 ```
 
-Then open http://localhost:5173
+Open http://localhost:5173

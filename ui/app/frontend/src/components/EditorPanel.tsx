@@ -18,13 +18,15 @@ export function EditorPanel({
       <label className="editor-label" htmlFor="debug-input">
         Paste code, compiler error, or sim log
       </label>
+      {busy ? <div className="analyzing-banner">Analyzing…</div> : null}
       <textarea
         id="debug-input"
-        className="editor"
+        className={`editor${busy ? " is-busy" : ""}`}
         value={value}
         onChange={(event) => onChange(event.target.value)}
         placeholder="module … / error: … / # time 20: q=x"
         spellCheck={false}
+        disabled={busy}
       />
       <div className="actions">
         <button

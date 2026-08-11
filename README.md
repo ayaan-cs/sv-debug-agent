@@ -1,14 +1,20 @@
 # SV Debug Agent
 
-Local app that helps debug SystemVerilog source, compiler errors, and simulation logs.
+Local desktop app that helps debug SystemVerilog source, compiler errors, and simulation logs.
 
-**Layout**
-- `sv_agent.py` — all debugging logic (unchanged core)
-- `samples.py` — shared sample inputs
-- `ui/app/` — current desktop + React UI
-- `ui/legacy/` — Streamlit UI
+Demo mode works without a Gemini API key — contributors do not need (and should not commit) API tokens.
 
-## Desktop app (recommended)
+## Project layout
+
+| Path | Purpose |
+|------|---------|
+| `sv_debug/` | Debugging logic (helpers, demo mode, Gemini path, samples) |
+| `sv_agent.py` | Compatible CLI / import wrapper around `sv_debug` |
+| `tests/` | Offline sample tests (no API key required) |
+| `ui/app/` | Desktop + React UI (recommended) |
+| `ui/legacy/` | Original Streamlit UI |
+
+## Quick start
 
 ```powershell
 pip install -r requirements.txt
@@ -16,28 +22,67 @@ copy .env.example .env
 .\ui\app\start-desktop.ps1
 ```
 
-## Browser / design mode
+This opens **SV Debug Agent** in a native window. The first launch builds the frontend automatically.
+
+### Optional: browser UI
 
 ```powershell
 .\ui\app\start-api.ps1
 .\ui\app\start-ui.ps1
 ```
 
-UI: http://localhost:5173
+Then open http://localhost:5173
 
-## Legacy Streamlit UI
+### Optional: legacy Streamlit UI
 
 ```powershell
 .\ui\legacy\start.ps1
 ```
 
-## Live Gemini mode
+## Configuration
+
+Edit `.env` (from `.env.example`):
+
+```env
+# Offline helpers (no API key needed) — recommended for contributors
+DEMO_MODE=true
+GEMINI_API_KEY=your_gemini_api_key_here
+```
+
+Keep `DEMO_MODE=true` unless you are testing your own Gemini key locally. Never commit a real key.
+
+For live Gemini on your machine only:
+
+1. Get a key from https://aistudio.google.com/apikey
+2. Set:
 
 ```env
 DEMO_MODE=false
 GEMINI_API_KEY=your_real_key_here
 ```
 
-## Design polish
+## Tests (no API key)
 
-Use `ui/app/CLAUDE_DESIGN_PROMPT.md` with Claude Design. Keep `sv_agent.py` unchanged.
+```powershell
+pip install -r requirements.txt
+pytest
+```
+
+These cover helper lint checks, sample inputs, and the offline demo pipeline.
+
+## Usage
+
+1. Load a sample from the sidebar, or paste HDL / an error / a sim log
+2. Click **Debug**
+3. Use the theme toggle for dark (default) or light mode
+
+## Contributing safely
+
+Useful contributions that do **not** require the maintainer’s API tokens:
+
+- Improve demo helpers / SystemVerilog pattern checks in `sv_debug/helpers.py`
+- Add samples in `sv_debug/samples.py` and matching tests in `tests/`
+- Improve the UI under `ui/app/`
+- Docs / README clarity
+
+Keep `.env` local. Prefer demo-mode tests so CI and reviewers never need secrets.
