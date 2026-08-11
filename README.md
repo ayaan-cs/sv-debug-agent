@@ -91,7 +91,21 @@ Useful contributions that do **not** require the maintainer’s API tokens:
 
 - Improve demo helpers / SystemVerilog pattern checks in `sv_debug/helpers.py`
 - Add samples in `sv_debug/samples.py` and matching tests in `tests/`
-- Improve the UI under `ui/app/`
+- Improve the VS Code–style UI under `ui/app/frontend/`
+  - Workbench chrome lives in `App.tsx` + `index.css`
+  - Editor highlighting is local (`components/svHighlight.tsx`) — no Monaco / CDN fonts
+  - Diagnosis panel is resizable; editor text persists in localStorage (capped)
 - Docs / README clarity
 
 Keep `.env` local. Prefer demo-mode tests so CI and reviewers never need secrets.
+Never commit API keys, `node_modules/`, or `ui/app/frontend/dist/`.
+
+### Suggested local checklist
+
+```powershell
+pytest
+cd ui\app\frontend
+npm run build
+```
+
+Run the desktop app with `DEMO_MODE=true` before opening a PR.

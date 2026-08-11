@@ -49,7 +49,7 @@ app.add_middleware(
 
 
 class DebugRequest(BaseModel):
-    input: str = Field(..., min_length=1)
+    input: str = Field(..., min_length=1, max_length=200_000)
 
 
 class AlternativeModel(BaseModel):
