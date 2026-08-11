@@ -3,7 +3,7 @@ import { fetchSamples, fetchStatus, runDebug } from "./api";
 import { EditorPanel } from "./components/EditorPanel";
 import { ResultPanel } from "./components/ResultPanel";
 import { Sidebar } from "./components/Sidebar";
-import type { AppStatus, Sample } from "./types";
+import type { Alternative, AppStatus, Sample } from "./types";
 
 type Theme = "dark" | "light";
 
@@ -31,6 +31,7 @@ export default function App() {
   const [samples, setSamples] = useState<Sample[]>([]);
   const [input, setInput] = useState(FALLBACK_SAMPLE);
   const [result, setResult] = useState<string | null>(null);
+  const [alternatives, setAlternatives] = useState<Alternative[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [bootError, setBootError] = useState<string | null>(null);
@@ -73,6 +74,7 @@ export default function App() {
   async function handleDebug() {
     if (!input.trim()) {
       setResult(null);
+      setAlternatives([]);
       setError("Paste some SystemVerilog or an error first — or load a sample.");
       return;
     }
@@ -82,8 +84,10 @@ export default function App() {
     try {
       const response = await runDebug(input);
       setResult(response.result);
+      setAlternatives(response.alternatives ?? []);
     } catch (err) {
       setResult(null);
+      setAlternatives([]);
       setError(err instanceof Error ? err.message : "Debug failed.");
     } finally {
       setBusy(false);
@@ -93,12 +97,19 @@ export default function App() {
   function handleClear() {
     setInput("");
     setResult(null);
+    setAlternatives([]);
     setError(null);
   }
 
   function handleLoadSample(sample: Sample) {
     setInput(sample.content);
     setResult(null);
+    setAlternatives([]);
+    setError(null);
+  }
+
+  function handleApplyAlternative(code: string) {
+    setInput(code);
     setError(null);
   }
 
@@ -140,12 +151,18 @@ export default function App() {
         <EditorPanel
           value={input}
           busy={busy}
+          theme={theme}
           onChange={setInput}
           onDebug={() => void handleDebug()}
           onClear={handleClear}
         />
 
-        <ResultPanel result={result} error={error} />
+        <ResultPanel
+          result={result}
+          error={error}
+          alternatives={alternatives}
+          onApplyAlternative={handleApplyAlternative}
+        />
       </main>
     </div>
   );

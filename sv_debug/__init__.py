@@ -9,6 +9,7 @@ from .helpers import (
 )
 from .pipeline import debug_systemverilog
 from .samples import SAMPLES, get_sample
+from .suggestions import suggest_alternatives
 
 __all__ = [
     "SAMPLES",
@@ -20,4 +21,5 @@ __all__ = [
     "explain_x_propagation",
     "get_sample",
     "has_api_key",
+    "suggest_alternatives",
 ]

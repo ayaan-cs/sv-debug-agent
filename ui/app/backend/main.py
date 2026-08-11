@@ -18,7 +18,13 @@ for path in (REPO_ROOT, APP_DIR):
     if str(path) not in sys.path:
         sys.path.insert(0, str(path))
 
-from sv_debug import SAMPLES, debug_systemverilog, demo_mode_enabled, has_api_key  # noqa: E402
+from sv_debug import (  # noqa: E402
+    SAMPLES,
+    debug_systemverilog,
+    demo_mode_enabled,
+    has_api_key,
+    suggest_alternatives,
+)
 
 app = FastAPI(
     title="SV Debug Agent API",
@@ -46,9 +52,16 @@ class DebugRequest(BaseModel):
     input: str = Field(..., min_length=1)
 
 
+class AlternativeModel(BaseModel):
+    title: str
+    code: str
+    note: str = ""
+
+
 class DebugResponse(BaseModel):
     result: str
     demo_mode: bool
+    alternatives: list[AlternativeModel] = []
 
 
 class StatusResponse(BaseModel):
@@ -88,7 +101,15 @@ def debug(body: DebugRequest) -> DebugResponse:
     except Exception as exc:  # noqa: BLE001
         raise HTTPException(status_code=500, detail=f"Debug failed: {exc}") from exc
 
-    return DebugResponse(result=result, demo_mode=demo_mode_enabled())
+    alts: list[AlternativeModel] = []
+    if demo_mode_enabled():
+        alts = [AlternativeModel(**item) for item in suggest_alternatives(text)]
+
+    return DebugResponse(
+        result=result,
+        demo_mode=demo_mode_enabled(),
+        alternatives=alts,
+    )
 
 
 # Serve the built React UI for the desktop app / single-server mode.

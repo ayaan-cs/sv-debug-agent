@@ -2,37 +2,13 @@
 
 from __future__ import annotations
 
+from .classifiers import looks_like_compiler_issue, looks_like_source, looks_like_x_issue
 from .helpers import (
     check_common_lint_patterns,
     explain_compiler_error,
     explain_x_propagation,
 )
-
-_COMPILER_HINTS = (
-    "syntax error",
-    "unknown module",
-    "is not a port",
-    "cannot be driven",
-    "error:",
-    "iverilog",
-)
-
-
-def looks_like_x_issue(text: str) -> bool:
-    lower = text.lower()
-    return any(token in lower for token in ("unknown", "'x'", "x-prop", " =x", "=x", "x ")) or (
-        "x" in lower and ("time" in lower or "reset" in lower or "data" in lower)
-    )
-
-
-def looks_like_compiler_issue(text: str) -> bool:
-    lower = text.lower()
-    return any(token in lower for token in _COMPILER_HINTS)
-
-
-def looks_like_source(text: str) -> bool:
-    lower = text.lower()
-    return any(token in lower for token in ("module", "always", "assign"))
+from .suggestions import format_alternatives_markdown, suggest_alternatives
 
 
 def demo_debug_systemverilog(user_input: str) -> str:
@@ -68,6 +44,11 @@ def demo_debug_systemverilog(user_input: str) -> str:
             "No strong X-propagation or compiler-error keywords were detected. "
             "Try one of the sample inputs, or paste a real compile/sim log."
         )
+
+    alternatives = suggest_alternatives(text)
+    alt_md = format_alternatives_markdown(alternatives)
+    if alt_md:
+        sections.append(alt_md)
 
     sections.append("---")
     sections.append(

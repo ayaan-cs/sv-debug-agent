@@ -7,8 +7,8 @@ import os
 import pytest
 
 from sv_debug.config import demo_mode_enabled, has_api_key
-from sv_debug.demo import (
-    demo_debug_systemverilog,
+from sv_debug.demo import demo_debug_systemverilog
+from sv_debug.classifiers import (
     looks_like_compiler_issue,
     looks_like_source,
     looks_like_x_issue,
@@ -16,6 +16,7 @@ from sv_debug.demo import (
 from sv_debug.helpers import check_common_lint_patterns
 from sv_debug.pipeline import debug_systemverilog
 from sv_debug.samples import SAMPLES, get_sample
+from sv_debug.suggestions import suggest_alternatives
 
 
 @pytest.fixture(autouse=True)
@@ -103,3 +104,17 @@ def test_demo_function_matches_pipeline() -> None:
     # Pipeline must stay in demo path under forced env
     assert os.getenv("DEMO_MODE") == "true"
     assert "Demo mode" in debug_systemverilog(text)
+
+
+def test_missing_reset_gets_alternative() -> None:
+    sample = get_sample("missing-reset")
+    alts = suggest_alternatives(sample["content"])
+    assert alts
+    assert "reset" in alts[0]["code"].lower()
+    assert "Suggested alternative" in debug_systemverilog(sample["content"])
+
+
+def test_old_always_gets_alternative() -> None:
+    sample = get_sample("old-always")
+    alts = suggest_alternatives(sample["content"])
+    assert any("always_ff" in alt["code"] for alt in alts)

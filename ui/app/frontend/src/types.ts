@@ -10,7 +10,14 @@ export type AppStatus = {
   app_name: string;
 };
 
+export type Alternative = {
+  title: string;
+  code: string;
+  note?: string;
+};
+
 export type DebugResponse = {
   result: string;
   demo_mode: boolean;
+  alternatives?: Alternative[];
 };
