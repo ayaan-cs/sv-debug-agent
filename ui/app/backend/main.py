@@ -1,4 +1,4 @@
-"""Thin FastAPI wrapper around sv_agent. No debugging logic lives here."""
+"""Thin FastAPI wrapper around sv_debug. No debugging logic lives here."""
 
 from __future__ import annotations
 
