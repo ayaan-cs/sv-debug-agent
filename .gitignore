@@ -3,10 +3,13 @@ __pycache__/
 *.pyc
 .env
 .streamlit/secrets.toml
+
+# Leftover root copy if a local process still has it locked
+/frontend/
+
+# App UI build artifacts
 ui/app/frontend/node_modules/
 ui/app/frontend/dist/
-frontend/
-frontend/node_modules/
-frontend/dist/
+
 .DS_Store
 *.log
