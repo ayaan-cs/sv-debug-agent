@@ -11,7 +11,8 @@ Demo mode works without a Gemini API key — contributors do not need (and shoul
 | `sv_debug/` | Debugging logic (helpers, demo mode, Gemini path, samples, CLI) |
 | `tests/` | Offline sample tests (no API key required) |
 | `ui/app/` | Desktop + React UI (recommended) |
-| `ui/legacy/` | Original Streamlit UI |
+| `legacy.py` | One-file legacy Streamlit UI + agent snapshot |
+| `ui/legacy/` | Shortcut to run `legacy.py` |
 
 ## Quick start
 
@@ -33,6 +34,14 @@ This opens **SV Debug Agent** in a native window. The first launch builds the fr
 Then open http://localhost:5173
 
 ### Optional: legacy Streamlit UI
+
+One-file snapshot of the original agent + Streamlit UI:
+
+```powershell
+streamlit run legacy.py
+```
+
+Or:
 
 ```powershell
 .\ui\legacy\start.ps1

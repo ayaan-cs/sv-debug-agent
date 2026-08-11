@@ -1,4 +1,4 @@
-# Legacy Streamlit UI
+# Legacy one-file Streamlit app (agent + UI)
 $repoRoot = Resolve-Path (Join-Path $PSScriptRoot "..\..")
 Set-Location $repoRoot
-streamlit run ui/legacy/app.py
+streamlit run legacy.py
