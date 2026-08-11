@@ -5,7 +5,7 @@ Recommended UI for SV Debug Agent.
 | Path | Purpose |
 |------|---------|
 | `frontend/` | React + Vite UI |
-| `backend/` | FastAPI wrapper around root `sv_agent.py` |
+| `backend/` | FastAPI wrapper around `sv_debug` |
 | `desktop_app.py` | Native desktop window (pywebview) |
 
 ## Run

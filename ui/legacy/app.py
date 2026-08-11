@@ -7,7 +7,7 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from sv_agent import debug_systemverilog, demo_mode_enabled, has_api_key
+from sv_debug import debug_systemverilog, demo_mode_enabled, has_api_key
 
 st.set_page_config(
     page_title="SV Debug Agent",

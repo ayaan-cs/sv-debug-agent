@@ -1,14 +1,11 @@
-"""SystemVerilog debugging agent package.
-
-Public entry points stay stable via ``sv_agent`` and ``sv_debug``.
-"""
+"""SystemVerilog debugging agent package."""
 
 from .config import demo_mode_enabled, has_api_key
 from .helpers import (
+    TOOLS,
     check_common_lint_patterns,
     explain_compiler_error,
     explain_x_propagation,
-    TOOLS,
 )
 from .pipeline import debug_systemverilog
 from .samples import SAMPLES, get_sample

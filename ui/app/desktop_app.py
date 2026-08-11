@@ -1,7 +1,7 @@
 """
 Launch SV Debug Agent as a native desktop window (not a browser tab).
 
-Uses pywebview + the local FastAPI server. Debugging logic stays in sv_agent.py.
+Uses pywebview + the local FastAPI server. Debugging logic stays in sv_debug/.
 """
 
 from __future__ import annotations

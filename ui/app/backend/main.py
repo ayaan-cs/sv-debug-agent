@@ -18,8 +18,7 @@ for path in (REPO_ROOT, APP_DIR):
     if str(path) not in sys.path:
         sys.path.insert(0, str(path))
 
-from samples import SAMPLES  # noqa: E402
-from sv_debug import debug_systemverilog, demo_mode_enabled, has_api_key  # noqa: E402
+from sv_debug import SAMPLES, debug_systemverilog, demo_mode_enabled, has_api_key  # noqa: E402
 
 app = FastAPI(
     title="SV Debug Agent API",

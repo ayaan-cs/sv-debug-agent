@@ -8,8 +8,7 @@ Demo mode works without a Gemini API key — contributors do not need (and shoul
 
 | Path | Purpose |
 |------|---------|
-| `sv_debug/` | Debugging logic (helpers, demo mode, Gemini path, samples) |
-| `sv_agent.py` | Compatible CLI / import wrapper around `sv_debug` |
+| `sv_debug/` | Debugging logic (helpers, demo mode, Gemini path, samples, CLI) |
 | `tests/` | Offline sample tests (no API key required) |
 | `ui/app/` | Desktop + React UI (recommended) |
 | `ui/legacy/` | Original Streamlit UI |
@@ -38,6 +37,14 @@ Then open http://localhost:5173
 ```powershell
 .\ui\legacy\start.ps1
 ```
+
+### Optional: CLI
+
+```powershell
+python -m sv_debug
+```
+
+Paste input, then type `END` on its own line.
 
 ## Configuration
 

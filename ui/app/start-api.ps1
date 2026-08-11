@@ -1,4 +1,4 @@
-# Start the local API that wraps sv_agent.py
+# Start the local API that wraps sv_debug
 $repoRoot = Resolve-Path (Join-Path $PSScriptRoot "..\..")
 Set-Location $PSScriptRoot
 $env:PYTHONPATH = "$repoRoot;$PSScriptRoot"
