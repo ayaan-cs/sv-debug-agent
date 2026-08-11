@@ -2,70 +2,64 @@
 
 :root,
 [data-theme="dark"] {
-  /* VS Code Dark+ defaults */
-  --bg: #1e1e1e;
-  --bg-accent: rgba(0, 122, 204, 0.12);
-  --panel: #252526;
-  --sidebar: #252526;
-  --ink: #cccccc;
-  --muted: #9d9d9d;
-  --line: #3c3c3c;
-  --brand: #007acc;
-  --brand-hover: #1c97ea;
-  --brand-strong: #0e639c;
-  --editor-bg: #1e1e1e;
-  --editor-ink: #d4d4d4;
-  --editor-border: #3c3c3c;
-  --editor-focus: rgba(0, 122, 204, 0.45);
-  --danger: #f14c4c;
-  --danger-bg: rgba(241, 76, 76, 0.12);
-  --danger-border: rgba(241, 76, 76, 0.35);
-  --demo-bg: rgba(89, 194, 115, 0.12);
-  --demo-ink: #89d185;
-  --demo-border: rgba(89, 194, 115, 0.35);
-  --live-bg: rgba(0, 122, 204, 0.15);
-  --live-ink: #75beff;
-  --live-border: rgba(0, 122, 204, 0.4);
-  --tip-border: #007acc;
-  --shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
-  --radius: 8px;
-  --font-sans: "Segoe UI", "Source Sans 3", sans-serif;
-  --font-display: "Segoe UI Semibold", "Segoe UI", sans-serif;
-  --font-mono: Consolas, "Courier New", monospace;
+  --bg: #0b1218;
+  --bg-accent: rgba(45, 212, 191, 0.08);
+  --panel: #121b24;
+  --sidebar: #0e161d;
+  --ink: #e8eef3;
+  --muted: #93a4b0;
+  --line: #24333e;
+  --brand: #2dd4bf;
+  --brand-hover: #5eead4;
+  --brand-strong: #14b8a6;
+  --editor-bg: #070c10;
+  --editor-ink: #e8eef3;
+  --editor-border: #2a3b49;
+  --editor-focus: rgba(45, 212, 191, 0.35);
+  --danger: #f97066;
+  --danger-bg: rgba(249, 112, 102, 0.12);
+  --danger-border: rgba(249, 112, 102, 0.35);
+  --demo-bg: rgba(45, 212, 191, 0.12);
+  --demo-ink: #99f6e4;
+  --demo-border: rgba(45, 212, 191, 0.35);
+  --live-bg: rgba(96, 165, 250, 0.12);
+  --live-ink: #bfdbfe;
+  --live-border: rgba(96, 165, 250, 0.35);
+  --tip-border: #2dd4bf;
+  --shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+  --radius: 12px;
+  --font-sans: "Source Sans 3", "Segoe UI", sans-serif;
+  --font-display: "Space Grotesk", "Source Sans 3", sans-serif;
+  --font-mono: "IBM Plex Mono", Consolas, monospace;
   color-scheme: dark;
 }
 
 [data-theme="light"] {
-  /* VS Code Light+ defaults */
-  --bg: #ffffff;
-  --bg-accent: rgba(0, 122, 204, 0.08);
-  --panel: #f3f3f3;
-  --sidebar: #f3f3f3;
-  --ink: #333333;
-  --muted: #6e6e6e;
-  --line: #e5e5e5;
-  --brand: #005fb8;
-  --brand-hover: #0078d4;
-  --brand-strong: #005fb8;
-  --editor-bg: #ffffff;
-  --editor-ink: #000000;
-  --editor-border: #cecece;
-  --editor-focus: rgba(0, 95, 184, 0.3);
-  --danger: #e51400;
-  --danger-bg: #fde7e9;
-  --danger-border: #f3b3b3;
-  --demo-bg: #e6f4ea;
-  --demo-ink: #0e7a30;
-  --demo-border: #a8d5b5;
-  --live-bg: #e8f2fc;
-  --live-ink: #005fb8;
-  --live-border: #a6d0f5;
-  --tip-border: #005fb8;
-  --shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-  --radius: 8px;
-  --font-sans: "Segoe UI", "Source Sans 3", sans-serif;
-  --font-display: "Segoe UI Semibold", "Segoe UI", sans-serif;
-  --font-mono: Consolas, "Courier New", monospace;
+  --bg: #eef2f4;
+  --bg-accent: rgba(15, 118, 110, 0.1);
+  --panel: #ffffff;
+  --sidebar: #f4f8f9;
+  --ink: #102028;
+  --muted: #3a4f5c;
+  --line: #d5e0e8;
+  --brand: #0f766e;
+  --brand-hover: #0d9488;
+  --brand-strong: #0f766e;
+  --editor-bg: #0f171d;
+  --editor-ink: #e8eef3;
+  --editor-border: #24333e;
+  --editor-focus: rgba(15, 118, 110, 0.35);
+  --danger: #b42318;
+  --danger-bg: #fef3f2;
+  --danger-border: #fecdca;
+  --demo-bg: #d9f3e7;
+  --demo-ink: #0f5132;
+  --demo-border: #9fd9c0;
+  --live-bg: #dce9f8;
+  --live-ink: #1e3a5f;
+  --live-border: #a9c6e8;
+  --tip-border: #0f766e;
+  --shadow: 0 10px 28px rgba(16, 32, 40, 0.08);
   color-scheme: light;
 }
 
@@ -83,7 +77,10 @@ body,
 body {
   min-width: 320px;
   color: var(--ink);
-  background: var(--bg);
+  background:
+    radial-gradient(900px 420px at 0% 0%, var(--bg-accent) 0%, transparent 55%),
+    radial-gradient(700px 360px at 100% 0%, rgba(56, 189, 248, 0.05) 0%, transparent 50%),
+    var(--bg);
   font-family: var(--font-sans);
   line-height: 1.45;
   font-synthesis: none;
@@ -206,9 +203,9 @@ textarea:focus-visible {
 .brand {
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(1.6rem, 3vw, 2rem);
+  font-size: clamp(2.2rem, 4.2vw, 3rem);
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.035em;
   color: var(--brand);
   line-height: 1.05;
 }
@@ -263,54 +260,53 @@ textarea:focus-visible {
 
 .editor-panel {
   position: relative;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  overflow: hidden;
-  background: var(--editor-bg);
-  margin-bottom: 1.25rem;
 }
 
-.editor-toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  padding: 0.45rem 0.75rem;
-  background: var(--panel);
-  border-bottom: 1px solid var(--line);
-  font-size: 0.8rem;
-}
-
-.editor-tab {
-  color: var(--ink);
+.editor-label {
+  display: block;
+  margin-bottom: 0.45rem;
+  font-family: var(--font-display);
   font-weight: 600;
-  padding: 0.2rem 0.55rem;
-  border-radius: 4px 4px 0 0;
+}
+
+.editor {
+  width: 100%;
+  min-height: 380px;
+  resize: vertical;
+  border: 1px solid var(--editor-border);
+  border-radius: var(--radius);
   background: var(--editor-bg);
-  border: 1px solid var(--line);
-  border-bottom-color: var(--editor-bg);
+  color: var(--editor-ink);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  line-height: 1.55;
+  padding: 1.05rem 1.15rem;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  transition: box-shadow 140ms ease, border-color 140ms ease;
 }
 
-.editor-lang {
-  color: var(--muted);
+.editor::placeholder {
+  color: #6b7c89;
 }
 
-.monaco-wrap {
-  border-bottom: 1px solid var(--line);
+.editor:focus {
+  outline: none;
+  border-color: var(--brand-strong);
+  box-shadow: 0 0 0 3px var(--editor-focus);
 }
 
-.monaco-wrap.is-busy {
+.editor.is-busy {
   opacity: 0.72;
 }
 
 .analyzing-banner {
   position: absolute;
-  top: 2.55rem;
+  top: 2.4rem;
   right: 0.85rem;
-  z-index: 2;
+  z-index: 1;
   padding: 0.35rem 0.7rem;
   border-radius: 999px;
-  background: rgba(30, 30, 30, 0.92);
+  background: rgba(15, 23, 32, 0.88);
   border: 1px solid var(--line);
   color: var(--brand);
   font-size: 0.78rem;
@@ -321,9 +317,7 @@ textarea:focus-visible {
 .actions {
   display: flex;
   gap: 0.65rem;
-  margin: 0;
-  padding: 0.75rem;
-  background: var(--panel);
+  margin: 0.9rem 0 1.25rem;
 }
 
 .btn {
@@ -341,72 +335,25 @@ textarea:focus-visible {
 .btn-primary {
   background: var(--brand-strong);
   border-color: var(--brand-strong);
+  color: #042f2e;
+}
+
+[data-theme="light"] .btn-primary {
   color: #fff;
 }
 
 .btn-primary:hover:not(:disabled) {
   background: var(--brand-hover);
   border-color: var(--brand-hover);
+  color: #042f2e;
+}
+
+[data-theme="light"] .btn-primary:hover:not(:disabled) {
   color: #fff;
 }
 
 .btn-secondary {
   background: transparent;
-}
-
-.alt-list {
-  margin-top: 1.25rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--line);
-}
-
-.alt-heading {
-  margin: 0 0 0.75rem;
-  font-size: 1rem;
-  font-family: var(--font-display);
-}
-
-.alt-card {
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: var(--editor-bg);
-  padding: 0.85rem 0.95rem;
-  margin-bottom: 0.75rem;
-}
-
-.alt-card-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  margin-bottom: 0.4rem;
-}
-
-.alt-card-top h4 {
-  margin: 0;
-  font-size: 0.95rem;
-}
-
-.alt-apply {
-  min-width: auto;
-  min-height: 2.1rem;
-  padding: 0.35rem 0.7rem;
-  white-space: nowrap;
-}
-
-.alt-note {
-  margin: 0 0 0.65rem;
-  color: var(--muted);
-  font-size: 0.9rem;
-}
-
-.alt-code {
-  margin: 0;
-  overflow-x: auto;
-  font-family: var(--font-mono);
-  font-size: 0.84rem;
-  line-height: 1.5;
-  color: var(--editor-ink);
 }
 
 .result-panel {

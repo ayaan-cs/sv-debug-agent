@@ -151,7 +151,6 @@ export default function App() {
         <EditorPanel
           value={input}
           busy={busy}
-          theme={theme}
           onChange={setInput}
           onDebug={() => void handleDebug()}
           onClear={handleClear}
