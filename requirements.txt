@@ -1,3 +1,6 @@
-streamlit
 google-genai
 python-dotenv
+fastapi
+uvicorn[standard]
+pywebview
+streamlit

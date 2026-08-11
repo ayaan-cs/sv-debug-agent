@@ -1,40 +1,43 @@
 # SV Debug Agent
 
-A Streamlit app that helps debug SystemVerilog source, compiler errors, and simulation logs.
+Local app that helps debug SystemVerilog source, compiler errors, and simulation logs.
 
-## Quick start
+**Layout**
+- `sv_agent.py` — all debugging logic (unchanged core)
+- `samples.py` — shared sample inputs
+- `ui/app/` — current desktop + React UI
+- `ui/legacy/` — Streamlit UI
 
-```bash
+## Desktop app (recommended)
+
+```powershell
 pip install -r requirements.txt
-cp .env.example .env   # Windows: copy .env.example .env
-streamlit run app.py
+copy .env.example .env
+.\ui\app\start-desktop.ps1
 ```
 
-Open http://localhost:8501
+## Browser / design mode
 
-## Demo mode (no API key)
+```powershell
+.\ui\app\start-api.ps1
+.\ui\app\start-ui.ps1
+```
 
-By default, if `GEMINI_API_KEY` is missing or still a placeholder, the app runs in **demo mode**. It uses the same local helper tools (X-propagation, compiler errors, lint patterns) without calling Gemini.
+UI: http://localhost:5173
 
-In `.env`:
+## Legacy Streamlit UI
 
-```env
-DEMO_MODE=true
-GEMINI_API_KEY=your_gemini_api_key_here
+```powershell
+.\ui\legacy\start.ps1
 ```
 
 ## Live Gemini mode
-
-1. Get a key from [Google AI Studio](https://aistudio.google.com/apikey)
-2. Put it in `.env` and turn demo mode off:
 
 ```env
 DEMO_MODE=false
 GEMINI_API_KEY=your_real_key_here
 ```
 
-## Usage tips
+## Design polish
 
-- Load a sample from the sidebar to try the flow quickly
-- Paste the **first** `'x'` in a sim log — later unknowns are often just fallout
-- Include a few lines of context around compiler errors
+Use `ui/app/CLAUDE_DESIGN_PROMPT.md` with Claude Design. Keep `sv_agent.py` unchanged.
