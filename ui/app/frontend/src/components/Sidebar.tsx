@@ -1,106 +1,77 @@
-import { useState } from "react";
 import type { AppStatus, Sample } from "../types";
-import { ChevronIcon, SvFileIcon } from "./icons";
 
 type SidebarProps = {
   status: AppStatus | null;
   samples: Sample[];
-  activeSampleId: string | null;
+  theme: "dark" | "light";
+  onToggleTheme: () => void;
   onLoadSample: (sample: Sample) => void;
 };
-
-type SectionProps = {
-  title: string;
-  children: React.ReactNode;
-  defaultOpen?: boolean;
-};
-
-function Section({ title, children, defaultOpen = true }: SectionProps) {
-  const [open, setOpen] = useState(defaultOpen);
-  return (
-    <section className="sidebar-section">
-      <button
-        type="button"
-        className="sidebar-section-header"
-        aria-expanded={open}
-        onClick={() => setOpen((v) => !v)}
-      >
-        <ChevronIcon className="sidebar-chevron" />
-        {title}
-      </button>
-      {open ? <div className="sidebar-section-body">{children}</div> : null}
-    </section>
-  );
-}
 
 export function Sidebar({
   status,
   samples,
-  activeSampleId,
+  theme,
+  onToggleTheme,
   onLoadSample,
 }: SidebarProps) {
   return (
     <aside className="sidebar" aria-label="Workspace controls">
-      <h2 className="sidebar-title">Explorer</h2>
+      <div className="sidebar-top">
+        <div className="sidebar-brand">SV Debug Agent</div>
+        <button
+          type="button"
+          className="theme-toggle"
+          onClick={onToggleTheme}
+          aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+        >
+          {theme === "dark" ? "Light" : "Dark"}
+        </button>
+      </div>
 
-      <Section title="Samples" defaultOpen={false}>
+      <section className="sidebar-section">
+        <h2 className="sidebar-label">Try a sample</h2>
+        <p className="sidebar-copy">Load an example, then press Debug.</p>
         <div className="sample-list">
           {samples.map((sample) => (
             <button
               key={sample.id}
               type="button"
-              className={`sample-button${sample.id === activeSampleId ? " is-active" : ""}`}
-              aria-current={sample.id === activeSampleId ? "true" : undefined}
+              className="sample-button"
               onClick={() => onLoadSample(sample)}
-              title={sample.title}
             >
-              <SvFileIcon className="sample-icon" />
-              <span className="sample-name">{sample.title}</span>
+              {sample.title}
             </button>
           ))}
-          {samples.length === 0 ? (
-            <p className="sidebar-copy">No samples loaded — start the local API.</p>
-          ) : null}
         </div>
-      </Section>
+      </section>
 
-      <Section title="Mode" defaultOpen={false}>
-        <div className="mode-rows">
-          <p className="mode-row">
-            <span className="mode-key">DEMO_MODE</span>
-            <span className="mode-val">{status ? String(status.demo_mode) : "…"}</span>
+      <section className="sidebar-section">
+        <h2 className="sidebar-label">Mode</h2>
+        {status?.demo_mode ? (
+          <p className="sidebar-copy">
+            Demo mode runs offline with built-in helpers. No API key required.
+            Set DEMO_MODE=false and GEMINI_API_KEY in .env for Gemini.
           </p>
-          <p className="mode-row">
-            <span className="mode-key">GEMINI_API_KEY</span>
-            <span className="mode-val">
-              {status ? (status.has_api_key ? "set" : "missing") : "…"}
-            </span>
+        ) : status?.has_api_key ? (
+          <p className="sidebar-copy">
+            Live Gemini mode is active using your API key.
           </p>
-        </div>
-        <p className="sidebar-copy">
-          {status?.demo_mode
-            ? "Demo mode diagnoses offline with the built-in helpers. Nothing leaves this machine."
-            : status?.has_api_key
-              ? "Live mode sends your input to Gemini using the key in .env."
-              : "No API key found. Add GEMINI_API_KEY to .env, or set DEMO_MODE=true."}
+        ) : (
+          <p className="sidebar-copy">
+            No API key found. Add GEMINI_API_KEY to .env, or set DEMO_MODE=true.
+          </p>
+        )}
+      </section>
+
+      <section className="sidebar-section">
+        <h2 className="sidebar-label">Tips</h2>
+        <p className="sidebar-tip">Start from the first unknown X in a sim log.</p>
+        <p className="sidebar-tip">
+          Keep a few lines of context around compiler errors.
         </p>
-      </Section>
-
-      <Section title="Tips" defaultOpen={false}>
-        <ul className="tip-list">
-          <li>
-            <span>
-              Start from the first unknown <code>x</code> in a sim log.
-            </span>
-          </li>
-          <li>
-            <span>Keep a few lines of context around compiler errors.</span>
-          </li>
-          <li>
-            <span>Source plus the error together works best.</span>
-          </li>
-        </ul>
-      </Section>
+        <p className="sidebar-tip">Source plus the error together works best.</p>
+      </section>
     </aside>
   );
 }
